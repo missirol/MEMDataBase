@@ -1,0 +1,26 @@
+#ifndef DATABASERUNCOLLECTION_H
+#define DATABASERUNCOLLECTION_H
+
+#include "MEMDataBase/MEMDataBase/interface/DataBaseLumiCollection.h"
+
+
+class RunCollection{
+public:
+  RunCollection();
+  ~RunCollection();
+  RunCollection(const Long64_t runNumber_);
+  
+  Long64_t GetRunNumber(){return runNumber;}
+  
+  void AddLumiAndEventInterval(const Long64_t minLumi_, const Long64_t maxLumi_,const Long64_t minEvent_, const Long64_t maxEvent_);
+  void PrintStructure();
+  
+  TString GetLumiAndEventIntervalString(const Long64_t lumiSection, const Long64_t eventNumber);
+  
+private:
+  std::vector<LumiCollection> lumiCollections;
+  Long64_t runNumber;
+  
+};
+
+#endif
