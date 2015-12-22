@@ -1,16 +1,16 @@
 import ROOT
 print ROOT.gSystem.Load("libMEMDataBaseMEMDataBase.so")
-print "ok"
+#print "ok"
 
 rand=ROOT.TRandom3(100)
 
 
 t=ROOT.MEMDataBase("/nfs/dust/cms/user/kelmorab/MEDataBase")
 
-print t.GetValue()
+#print t.GetValue()
 
 
-t.AddSample("ttbar")
+t.AddSample("ttbar","ttbar_index.txt")
 t.PrintStructure()
 
 #test the readout

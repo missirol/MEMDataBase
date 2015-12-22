@@ -15,6 +15,26 @@ void LumiCollection::AddEventInterval(const Long64_t minEvent_, const Long64_t m
   std::sort(eventCollections.begin(), eventCollections.end(), DataBaseInterval::minIsSmaller );
 }
 
+bool LumiCollection::RemoveEventInterval(const Long64_t minEvent_, const Long64_t maxEvent_){
+  bool removed=false;
+  int id=-1;
+  
+  for(unsigned int i=0; i<eventCollections.size();i++){
+    if(eventCollections.at(i).GetMinVal()==minEvent_ and eventCollections.at(i).GetMaxVal()==maxEvent_ ){
+     id=i;
+     break;
+    }
+  }
+  
+  if(id>=0){
+    eventCollections.erase(eventCollections.begin()+id);
+    removed=true;
+  }
+  
+  std::sort(eventCollections.begin(), eventCollections.end(), DataBaseInterval::minIsSmaller );
+  return removed;
+}
+
 void LumiCollection::PrintStructure(){
   std::cout<<"  Lumi "<<lumiInterval.GetMinVal()<<" "<<lumiInterval.GetMaxVal()<<std::endl;
   for(auto & ievt : eventCollections){

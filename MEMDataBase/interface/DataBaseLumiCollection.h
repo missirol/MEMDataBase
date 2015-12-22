@@ -13,6 +13,7 @@ public:
   Long64_t GetMaxLumi() const {return lumiInterval.GetMaxVal();}
   
   void AddEventInterval(const Long64_t minEvent_, const Long64_t maxEvent_);
+  bool RemoveEventInterval(const Long64_t minEvent_, const Long64_t maxEvent_);
   void PrintStructure();
 
   static bool minIsSmaller(const LumiCollection& l1, const LumiCollection& l2){return (l1.GetMinLumi()<l2.GetMinLumi()); }
