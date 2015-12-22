@@ -9,7 +9,7 @@ t=ROOT.MEMDataBase("/nfs/dust/cms/user/kelmorab/MEDataBase")
 
 t.AddSample("ttH")
 
-for i in range(200000):
+for i in range(1000):
   if i%1000==0:
     print "at ", i
   #lumi=int(rand.Uniform(0,30))

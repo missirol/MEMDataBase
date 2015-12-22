@@ -93,7 +93,7 @@ for ievt in range(minEvent, maxEvent):
     
     
     
-thisFileName=sample+"_"+str(RelRun)+"_"+str(minLumi)+"_"+str(maxLumi)+"_"+str(firstEvent)+"_"+str(ievt)+"_.root"
+thisFileName=sample+"#"+str(RelRun)+"#"+str(minLumi)+"#"+str(maxLumi)+"#"+str(firstEvent)+"#"+str(ievt)+"#.root"
 filelist.append(thisFileName)
 thisFile=ROOT.TFile(dataBaseDirectory+thisFileName,"RECREATE")
 thisFile.cd()

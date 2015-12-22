@@ -7,10 +7,10 @@ DataBaseSample::DataBaseSample(const TString sampleName_, const TString dataBase
   dataBaseDirectory=dataBaseDirectory_;
   sampleName=sampleName_;
   
-  if(indexFile_==""){indexFile=sampleName+TString("_index.txt");  }
+  if(indexFile_==""){indexFile=sampleName+TString("_index.txt"); std::cout<<indexFile<<std::endl; }
   else {
-    
     indexFile=indexFile_;
+  }
     std::ifstream idfilestream(dataBaseDirectory_+TString("/")+indexFile);
     TString dumpline;
      
@@ -23,21 +23,22 @@ DataBaseSample::DataBaseSample(const TString sampleName_, const TString dataBase
 //       std::cout<<dumpline<<std::endl;
       FileNames.push_back(dumpline);
       TObjArray *obja=dumpline.Tokenize("_");
+      Int_t arraylength=obja->GetEntries();
       
-      TString thisrun=((TObjString*)(obja->At(1)))->String();
-      TString thisminlumi=((TObjString*)(obja->At(2)))->String();
-      TString thismaxlumi=((TObjString*)(obja->At(3)))->String();
-      TString thisminevent=((TObjString*)(obja->At(4)))->String();
-      TString thismaxevent=((TObjString*)(obja->At(5)))->String();
+      TString thisrun=((TObjString*)(obja->At(arraylength-6)))->String();
+      TString thisminlumi=((TObjString*)(obja->At(arraylength-5)))->String();
+      TString thismaxlumi=((TObjString*)(obja->At(arraylength-4)))->String();
+      TString thisminevent=((TObjString*)(obja->At(arraylength-3)))->String();
+      TString thismaxevent=((TObjString*)(obja->At(arraylength-2)))->String();
       
 //       std::cout<<thisrun<<" "<<thisminlumi<<" "<<thismaxlumi<<" "<<thisminevent<<" "<<thismaxevent<<std::endl;
       AddRunLumiEventCollection(thisrun.Atoll(), thisminlumi.Atoll(), thismaxlumi.Atoll(), thisminevent.Atoll(),thismaxevent.Atoll());
      }
    idfilestream.close();
    std::cout<<"Index file read: "<<indexFile<<std::endl; 
-  }
+//   }
   
-  std::cout<<"empty Index file created: "<<indexFile<<std::endl; 
+//   std::cout<<"empty Index file created: "<<indexFile<<std::endl; 
   
   currentOpenFileName="";
   openMode="READ";
@@ -120,7 +121,7 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
     else{ startEvt=it.first;}
   }
   
-  std::cout<<"starting at "<<startEvt<<std::endl;
+//   std::cout<<"starting at "<<startEvt<<std::endl;
   
   bool found=false;
   for(Int_t ievt=startEvt; ievt<currentTreeEntries; ievt++){
@@ -140,10 +141,10 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
     thisMEM.n_perm_sig=br_n_perm_sig;
     thisMEM.n_perm_bkg=br_n_perm_sig;
     
-    std::cout<<"FOUND p= "<<thisMEM.p<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
+//     std::cout<<"FOUND p= "<<thisMEM.p<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
   }
   else{
-    std::cout<<"NO ENTRY FOR: "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
+//     std::cout<<"NO ENTRY FOR: "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
   }
     
   return thisMEM;
@@ -189,7 +190,7 @@ bool DataBaseSample::CloseTree(){
   if(openMode=="UPDATE"){
     TString oldname=dataBaseDirectory+TString("/")+currentOpenFileName;
     TString newname=dataBaseDirectory+TString("/")+currentOpenFileName+TString("_buffer");
-//     std::cout<<"names "<<oldname<<" "<<newname<<std::endl;
+    std::cout<<"names "<<oldname<<" "<<newname<<std::endl;
     remove(oldname);
     rename(newname, oldname);
   }
@@ -202,7 +203,7 @@ bool DataBaseSample::CloseTree(){
 }
 
 bool DataBaseSample::OpenTree(TString filename){
-//   std::cout<<"about to open "<<filename<<std::endl;
+  std::cout<<"about to open "<<filename<<std::endl;
   
   CloseTree();
   currentOpenFileName=filename;  
@@ -376,13 +377,15 @@ bool DataBaseSample::SplitCollection(TString oldfilename){
   std::cout<<"splitting tree "<<oldfilename<<" at "<<midevent<<std::endl;
   
   TObjArray *obja=oldfilename.Tokenize("_");
+  Int_t arraylength=obja->GetEntries();
+
   
-  TString thissamplename=((TObjString*)(obja->At(0)))->String();
-  TString thisrun=((TObjString*)(obja->At(1)))->String();
-  TString thisminlumi=((TObjString*)(obja->At(2)))->String();
-  TString thismaxlumi=((TObjString*)(obja->At(3)))->String();
-  TString thisminevent=((TObjString*)(obja->At(4)))->String();
-  TString thismaxevent=((TObjString*)(obja->At(5)))->String();
+  TString thissamplename=sampleName;
+  TString thisrun=((TObjString*)(obja->At(arraylength-6)))->String();
+  TString thisminlumi=((TObjString*)(obja->At(arraylength-5)))->String();
+  TString thismaxlumi=((TObjString*)(obja->At(arraylength-4)))->String();
+  TString thisminevent=((TObjString*)(obja->At(arraylength-3)))->String();
+  TString thismaxevent=((TObjString*)(obja->At(arraylength-2)))->String();
   
 //   AddRunLumiEventCollection(thisrun.Atoll(), thisminlumi.Atoll(), thismaxlumi.Atoll(), thisminevent.Atoll(),thismaxevent.Atoll());
   TString newfilenameDown=thissamplename+TString("_")+thisrun+TString("_")+thisminlumi+TString("_")+thismaxlumi+TString("_")+thisminevent+TString("_")+TString::LLtoa(midevent,10)+TString("_.root");

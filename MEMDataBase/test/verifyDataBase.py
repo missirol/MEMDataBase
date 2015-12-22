@@ -16,7 +16,7 @@ for f in treefilelist:
   tf=ROOT.TFile(path+"/"+f.replace("\n",""),"READ")
   t=tf.Get("MVATree")
   
-  namelist=f.replace("_.root\n","").split("_")
+  namelist=f.replace("#.root\n","").split("#")
   #print namelist
   minlumiFromName=namelist[2]
   maxlumiFromName=namelist[3]
@@ -46,7 +46,7 @@ else:
   
 print ROOT.gSystem.Load("libMEMDataBaseMEMDataBase.so")
 t=ROOT.MEMDataBase(path)
-t.AddSample(samplename,indexfilename)
+t.AddSample(samplename)
 t.PrintStructure()
 
 allOk=True
