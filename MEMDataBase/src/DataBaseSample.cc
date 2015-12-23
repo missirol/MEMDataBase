@@ -141,10 +141,10 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
     thisMEM.n_perm_sig=br_n_perm_sig;
     thisMEM.n_perm_bkg=br_n_perm_sig;
     
-//     std::cout<<"FOUND p= "<<thisMEM.p<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
+    std::cout<<"FOUND p= "<<thisMEM.p<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
   }
   else{
-//     std::cout<<"NO ENTRY FOR: "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
+    std::cout<<"NO ENTRY FOR: "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
   }
     
   return thisMEM;
@@ -190,7 +190,7 @@ bool DataBaseSample::CloseTree(){
   if(openMode=="UPDATE"){
     TString oldname=dataBaseDirectory+TString("/")+currentOpenFileName;
     TString newname=dataBaseDirectory+TString("/")+currentOpenFileName+TString("_buffer");
-    std::cout<<"names "<<oldname<<" "<<newname<<std::endl;
+//     std::cout<<"names "<<oldname<<" "<<newname<<std::endl;
     remove(oldname);
     rename(newname, oldname);
   }
@@ -203,7 +203,7 @@ bool DataBaseSample::CloseTree(){
 }
 
 bool DataBaseSample::OpenTree(TString filename){
-  std::cout<<"about to open "<<filename<<std::endl;
+//   std::cout<<"about to open "<<filename<<std::endl;
   
   CloseTree();
   currentOpenFileName=filename;  

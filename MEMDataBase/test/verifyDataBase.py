@@ -44,33 +44,3 @@ else:
   print "problem"
   exit(0)
   
-print ROOT.gSystem.Load("libMEMDataBaseMEMDataBase.so")
-t=ROOT.MEMDataBase(path)
-t.AddSample(samplename)
-t.PrintStructure()
-
-allOk=True
-
-testfile=open(testlogfile,"r")
-testlist=list(testfile)
-
-for test in testlist:
-  ll=test.replace("\n","").split(",")
-  testrun=int(ll[0])
-  testlumi=int(ll[1])
-  testevent=int(ll[2])
-  testp=float(ll[3])
-  
-  result=t.GetMEMResult(samplename,testrun,testlumi,testevent)
-  resultp=result.p
-  if abs(resultp-testp) >= 0.01:
-    allOk=False
-    print "problem at", ll
-    exit(0)
-  
-
-
-  
-  
-
-  
