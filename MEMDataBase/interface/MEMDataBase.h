@@ -19,7 +19,7 @@ public:
   void PrintStructure();
   
   DataBaseMEMResult GetMEMResult(TString sample, Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber);
-  bool AddEvent(TString sample, Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Float_t p, Float_t p_sig, Float_t p_bkg, Float_t p_err_sig, Float_t p_err_bkg, Float_t n_perm_sig, Float_t n_perm_bkg);
+  bool AddEvent(TString sample, Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Float_t Weight_muRupmuFup, Float_t Weight_muRdownmuFdown, Float_t Weight_NNPDFid260067, Float_t Weight_NNPDFid260005);
   
   void SaveDataBase();
 private:

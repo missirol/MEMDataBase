@@ -215,13 +215,13 @@ bool DataBaseSample::OpenTree(TString filename){
   currentOpenTree->SetBranchAddress("run",&brRun);
   currentOpenTree->SetBranchAddress("lumi",&brLumi);
   currentOpenTree->SetBranchAddress("event",&brEvent);
-  currentOpenTree->SetBranchAddress("p",&br_p);
-  currentOpenTree->SetBranchAddress("p_sig",&br_p_sig);
-  currentOpenTree->SetBranchAddress("p_bkg",&br_p_bkg);
-  currentOpenTree->SetBranchAddress("p_err_sig",&br_p_err_sig);
-  currentOpenTree->SetBranchAddress("p_err_bkg",&br_p_err_bkg);
-  currentOpenTree->SetBranchAddress("n_perm_sig",&br_n_perm_sig);
-  currentOpenTree->SetBranchAddress("n_perm_bkg",&br_n_perm_bkg);
+  currentOpenTree->SetBranchAddress("Weight_muRupmuFup",&br_Weight_muRupmuFup);
+  currentOpenTree->SetBranchAddress("Weight_muRdownmuFdown",&br_Weight_muRdownmuFdown);
+  currentOpenTree->SetBranchAddress("Weight_NNPDFid260067",&br_Weight_NNPDFid260067);
+  currentOpenTree->SetBranchAddress("Weight_NNPDFid260005",&br_Weight_NNPDFid260005);
+//   currentOpenTree->SetBranchAddress("p_err_bkg",&br_p_err_bkg);
+//   currentOpenTree->SetBranchAddress("n_perm_sig",&br_n_perm_sig);
+//   currentOpenTree->SetBranchAddress("n_perm_bkg",&br_n_perm_bkg);
 
 //   std::cout<<"opened tree "<<dataBaseDirectory<<"/"<<filename<<std::endl;
   lookUpMap.clear();
@@ -282,7 +282,7 @@ DataBaseSample::~DataBaseSample(){
 }
 
 
-bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Float_t p, Float_t p_sig, Float_t p_bkg, Float_t p_err_sig, Float_t p_err_bkg, Float_t n_perm_sig, Float_t n_perm_bkg){
+bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Float_t Weight_muRupmuFup, Float_t Weight_muRdownmuFdown, Float_t Weight_NNPDFid260067, Float_t Weight_NNPDFid260005){
   TString relevantFileName=GetFileNameForEvent(runNumber,lumiSection,eventNumber);
 //   std::cout<<eventNumber<<" "<<relevantFileName<<std::endl;
   
@@ -298,14 +298,14 @@ bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t
   }
   if(relevantFileName!=""){
     if(relevantFileName!=currentOpenFileName){openMode="UPDATE"; OpenTree(relevantFileName);}
-    AddEventToTree(runNumber, lumiSection, eventNumber, p, p_sig, p_bkg, p_err_sig, p_err_bkg,n_perm_sig,n_perm_bkg);   
+    AddEventToTree(runNumber, lumiSection, eventNumber, Weight_muRupmuFup, Weight_muRdownmuFdown, Weight_NNPDFid260067, Weight_NNPDFid260005);   
   }
 
 //   CloseTree();
   return true; 
 }
 
-void DataBaseSample::AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Float_t p, Float_t p_sig, Float_t p_bkg, Float_t p_err_sig, Float_t p_err_bkg, Float_t n_perm_sig, Float_t n_perm_bkg){
+void DataBaseSample::AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Float_t Weight_muRupmuFup, Float_t Weight_muRdownmuFdown, Float_t Weight_NNPDFid260067, Float_t Weight_NNPDFid260005){
     
    brRun=runNumber;
    brLumi=lumiSection;
