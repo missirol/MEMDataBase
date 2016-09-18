@@ -75,3 +75,4 @@ myDataBase.PrintStructure()
 myDataBase.SaveDataBase()
 
 # You can later add additional events to the database and the same sample identifier
+# BUT better not add events which are already there, this would lead to undefined behaviour

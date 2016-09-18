@@ -274,10 +274,10 @@ DataBaseSample::~DataBaseSample(){
 //     delete currentOpenTreeFile;
 //    }  
   
-   std::cout<<"destructor called"<<std::endl;
+//    std::cout<<"destructor called"<<std::endl;
    
    CloseTree();
-   std::cout<<"destructor succeeded"<<std::endl;
+//    std::cout<<"destructor succeeded"<<std::endl;
 
 }
 

@@ -19,7 +19,7 @@ myDataBase.AddSample("ttHbbJESUP")
 # myDataBase.AddEvent( sampleName, run, lumi, event, p, p_sig, p_bkg, p_err_sig, p_err_bkg, n_perm_sig, n_perm_bkg )
 # here for run and lumi = 1 and bogus event numbers
 for i in range(100):
-  myDataBase.AddEvent("ttH",1,1,100+i,0.5,0.4,0.4,0.4,0.4,12,12)
+  myDataBase.AddEvent("ttHbbJESUP",1,1,100+i,0.5,0.4,0.45,0.46,0.47,12,12)
 
 #print structure of database
 myDataBase.PrintStructure()
@@ -28,3 +28,4 @@ myDataBase.PrintStructure()
 myDataBase.SaveDataBase()
 
 # You can later add additional events to the database and the same sample identifier
+# BUT better not add events which are already there, this would lead to undefined behaviour

@@ -18,8 +18,8 @@ myDataBase.AddSample("ttHbbJESUP","ttHbbJESUP_index.txt")
 myDataBase.PrintStructure()
 
 run=1
-lumi=101
-event=123456
+lumi=1
+event=105
 # retrive MEM for this event
 # return an object of class DataBaseMEMResult
 # myDataBase.GetMEMResult( samplename, run, lumi, event )
@@ -28,8 +28,8 @@ result=myDataBase.GetMEMResult("ttHbbJESUP", run, lumi, event)
 print "run lumi event, MEM p", run, lumi, event, result.p
 print "MEM p_sig", result.p_sig
 print "MEM p_bkg", result.p_bkg
-print "MEM p_err_sig", ievt, result.p_err_sig
-print "MEM p_err_bkg", ievt, result.p_err_bkg
-print "MEM n_perm_sig", ievt, result.n_perm_sig
-print "MEM n_perm_bkg", ievt, result.n_perm_bkg
+print "MEM p_err_sig",  result.p_err_sig
+print "MEM p_err_bkg",  result.p_err_bkg
+print "MEM n_perm_sig",  result.n_perm_sig
+print "MEM n_perm_bkg",  result.n_perm_bkg
 #
