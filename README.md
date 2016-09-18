@@ -2,7 +2,7 @@ MEMDataBase
 ===================================
 
 * Database to store MEM output values.
-* The idea is to calculate the MEM once for each event and store it here with a unique samplename, run, lumi, event identifier.
+* The idea is to calculate the MEM once for each event and store it here with a unique sample, run, lumi, event identifier.
 * Then the MEM can be retrived using these identifiers.
 * It is important to quickly find the correct event out of O(100M) other events while keeping the memory footprint low.
 * For this the database is hierarchically structured according to sample, run, lumi, event. And restructured when adding additional events.
@@ -34,7 +34,7 @@ Initialize the Database to a writable path (that already exists)
 ~~~
 myDataBase=ROOT.MEMDataBase("/nfs/dust/cms/user/kelmorab/MEDataBase")
 ~~~
-Create the top level hierarchy for a specific sample. 
+Create the top level hierarchy for a specific sample and systematic. 
 Use an unique identifier which CANNOT contain underscores.
 e.g. ttbarInclusiveJESDOWN 
 ~~~
