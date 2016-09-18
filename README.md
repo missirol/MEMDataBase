@@ -12,7 +12,7 @@ MEMDataBase
 Setup
 -----
 
-This is a CMSSW package so you need CMSSW. But the code is actually independent of CMSSW.   
+This is setup as a CMSSW package so you need CMSSW. But the code actually only need ROOT and can be used without CMSSW.
 Last tested with CMSSW_8_0_19
 ~~~
 cd $CMSSW_BASE/src
