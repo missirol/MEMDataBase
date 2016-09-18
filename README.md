@@ -70,7 +70,7 @@ Retrieve MEM
 ~~~
 result=myDataBase.GetMEMResult("ttHbbJESUP", run, lumi, event)
 ~~~
-result is a simple class https://github.com/kit-cn-cms/MEMDataBase/blob/master/MEMDataBase/interface/DataBaseMEMResult.h
+result is a simple class https://github.com/kit-cn-cms/MEMDataBase/blob/master/MEMDataBase/interface/DataBaseMEMResult.h   
 Get MEM p
 ~~~
 result.p
@@ -79,7 +79,8 @@ More examples in https://github.com/kit-cn-cms/MEMDataBase/tree/master/MEMDataBa
 
 Usage in CMSSW C++
 -----
-You can use the database classes directly in C++ code in CMSSW by including the appropriate header files.
+You can use the database classes directly in C++ code in CMSSW by calling this class   
+https://github.com/kit-cn-cms/MEMDataBase/blob/master/MEMDataBase/interface/MEMDataBase.h
 
 Usage without CMSSW
 -----
