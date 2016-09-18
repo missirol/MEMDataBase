@@ -133,15 +133,15 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
   }
   
   if(found){
-    thisMEM.p=br_p;
-    thisMEM.p_sig=br_p_sig;
-    thisMEM.p_bkg=br_p_bkg;
-    thisMEM.p_err_sig=br_p_err_sig;
-    thisMEM.p_err_bkg=br_p_err_bkg;
-    thisMEM.n_perm_sig=br_n_perm_sig;
-    thisMEM.n_perm_bkg=br_n_perm_sig;
+    thisMEM.Weight_muRupmuFup=br_Weight_muRupmuFup;
+    thisMEM.Weight_muRdownmuFdown=br_Weight_muRdownmuFdown;
+    thisMEM.Weight_NNPDFid260067=br_Weight_NNPDFid260067;
+    thisMEM.Weight_NNPDFid260005=br_Weight_NNPDFid260005;
+//     thisMEM.p_err_bkg=br_p_err_bkg;
+//     thisMEM.n_perm_sig=br_n_perm_sig;
+//     thisMEM.n_perm_bkg=br_n_perm_sig;
     
-    std::cout<<"FOUND p= "<<thisMEM.p<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
+    std::cout<<"FOUND p= "<<thisMEM.Weight_muRupmuFup<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
   }
   else{
     std::cout<<"NO ENTRY FOR: "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
@@ -289,8 +289,8 @@ bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t
   if(relevantFileName=="" or relevantFileName==sampleName+"_"){
 //     std::cout<<"collection for event does not exist yes. Creating it"<<std::endl;
     //get ranges for lumiinterval
-    Long64_t lowerlumival=lumiSection-lumiSection%10;
-    Long64_t upperlumival=lowerlumival+9;
+    Long64_t lowerlumival=lumiSection-lumiSection%100000;
+    Long64_t upperlumival=lowerlumival+99999;
     AddRunLumiEventCollection(runNumber, lowerlumival, upperlumival, 0,999999999);
     
     relevantFileName=GetFileNameForEvent(runNumber,lumiSection,eventNumber);
@@ -311,13 +311,13 @@ void DataBaseSample::AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Lo
    brLumi=lumiSection;
    brEvent=eventNumber;
   
-   br_p=p;
-   br_p_sig=p_sig;
-   br_p_bkg=p_bkg;
-   br_p_err_sig=p_err_sig;
-   br_p_err_bkg=p_err_bkg;
-   br_n_perm_sig=n_perm_sig;
-   br_n_perm_bkg=n_perm_bkg;
+   br_Weight_muRupmuFup=Weight_muRupmuFup;
+   br_Weight_muRdownmuFdown=Weight_muRdownmuFdown;
+   br_Weight_NNPDFid260067=Weight_NNPDFid260067;
+   br_Weight_NNPDFid260005=Weight_NNPDFid260005;
+//    br_p_err_bkg=p_err_bkg;
+//    br_n_perm_sig=n_perm_sig;
+//    br_n_perm_bkg=n_perm_bkg;
    
    currentOpenTree->Fill();
 //    std::cout<<"filled "<<eventNumber<<std::endl;
@@ -343,13 +343,13 @@ bool DataBaseSample::CreateNewTree(TString filename){
   newtree->Branch("run",&brRun,"run/I");
   newtree->Branch("lumi",&brLumi,"lumi/I");
   newtree->Branch("event",&brEvent,"event/I");
-  newtree->Branch("p",&br_p,"p/F");
-  newtree->Branch("p_sig",&br_p_sig,"p_sig/F");
-  newtree->Branch("p_bkg",&br_p_bkg,"p_bkg/F");
-  newtree->Branch("p_err_sig",&br_p_err_sig,"p_err_sig/F");
-  newtree->Branch("p_err_bkg",&br_p_err_bkg,"p_err_bkg/F");
-  newtree->Branch("n_perm_sig",&br_n_perm_sig,"n_perm_sig/F");
-  newtree->Branch("n_perm_bkg",&br_n_perm_bkg,"n_perm_bkg/F");
+  newtree->Branch("Weight_muRupmuFup",&br_Weight_muRupmuFup,"Weight_muRupmuFup/F");
+  newtree->Branch("Weight_muRdownmuFdown",&br_Weight_muRdownmuFdown,"Weight_muRdownmuFdown/F");
+  newtree->Branch("Weight_NNPDFid260067",&br_Weight_NNPDFid260067,"Weight_NNPDFid260067/F");
+  newtree->Branch("Weight_NNPDFid260005",&br_Weight_NNPDFid260005,"Weight_NNPDFid260005/F");
+//   newtree->Branch("p_err_bkg",&br_p_err_bkg,"p_err_bkg/F");
+//   newtree->Branch("n_perm_sig",&br_n_perm_sig,"n_perm_sig/F");
+//   newtree->Branch("n_perm_bkg",&br_n_perm_bkg,"n_perm_bkg/F");
   newtree->AutoSave();
   newtreefile->Close();
   delete newtreefile;
