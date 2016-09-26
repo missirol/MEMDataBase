@@ -27,7 +27,7 @@ public:
   
   DataBaseMEMResult GetMEMResult(const Long64_t runNumber, const Long64_t lumiSection, const Long64_t eventNumber);
   
-  bool AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Float_t p, Float_t p_sig, Float_t p_bkg, Float_t p_err_sig, Float_t p_err_bkg, Float_t n_perm_sig, Float_t n_perm_bkg);
+  bool AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Double_t p, Double_t p_sig, Double_t p_bkg, Double_t p_err_sig, Double_t p_err_bkg, Double_t n_perm_sig, Double_t n_perm_bkg);
   bool SaveDataBase();
 private:
 
@@ -46,7 +46,7 @@ private:
   
   TString GetFileNameForEvent(const Long64_t runNumber, const Long64_t lumiSection, const Long64_t eventNumber);
 //   bool GetRelevantRunAndLumi(const Long64_t lumiSection, const Long64_t eventNumber);
-  void AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Float_t p, Float_t p_sig, Float_t p_bkg, Float_t p_err_sig, Float_t p_err_bkg, Float_t n_perm_sig, Float_t n_perm_bkg);
+  void AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Double_t p, Double_t p_sig, Double_t p_bkg, Double_t p_err_sig, Double_t p_err_bkg, Double_t n_perm_sig, Double_t n_perm_bkg);
   bool RemoveEventCollection(const Long64_t runNumber_, const Long64_t minLumi_, const Long64_t maxLumi_,const Long64_t minEvent_, const Long64_t maxEvent_);
   
   bool OpenTree(TString filename);
@@ -67,13 +67,13 @@ private:
   Int_t brLumi;
   Int_t brEvent;
   
-  Float_t br_p;
-  Float_t br_p_sig;
-  Float_t br_p_bkg;
-  Float_t br_p_err_sig;
-  Float_t br_p_err_bkg;
-  Float_t br_n_perm_sig;
-  Float_t br_n_perm_bkg;
+  Double_t br_p;
+  Double_t br_p_sig;
+  Double_t br_p_bkg;
+  Double_t br_p_err_sig;
+  Double_t br_p_err_bkg;
+  Double_t br_n_perm_sig;
+  Double_t br_n_perm_bkg;
 
   std::map<Int_t, Long64_t> lookUpMap;
   

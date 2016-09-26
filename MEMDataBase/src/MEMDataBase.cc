@@ -56,7 +56,7 @@ DataBaseMEMResult MEMDataBase::GetMEMResult(TString sample, Long64_t runNumber, 
   return dummyResult;
 }
 
-bool MEMDataBase::AddEvent(TString sample, Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Float_t p, Float_t p_sig, Float_t p_bkg, Float_t p_err_sig, Float_t p_err_bkg, Float_t n_perm_sig, Float_t n_perm_bkg){
+bool MEMDataBase::AddEvent(TString sample, Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Double_t p, Double_t p_sig, Double_t p_bkg, Double_t p_err_sig, Double_t p_err_bkg, Double_t n_perm_sig, Double_t n_perm_bkg){
   for(unsigned int isample=0; isample<sampleNames.size();isample++){
     if(sampleNames.at(isample)==sample){
       sampleDataBases.at(isample)->AddEvent(runNumber,lumiSection,eventNumber, p, p_sig, p_bkg, p_err_sig, p_err_bkg,n_perm_sig,n_perm_bkg);
