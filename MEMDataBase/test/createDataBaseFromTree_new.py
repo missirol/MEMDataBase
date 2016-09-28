@@ -21,10 +21,10 @@ samplename=sys.argv[2]
 listOfInputTrees=sys.argv[3:]
 
 # arrays to hold branches
-run=array("i",[0])
-lumi=array("i",[0])
-event=array("i",[0])
-systematic=array("d",[0])
+run=array("l",[0])
+lumi=array("l",[0])
+event=array("l",[0])
+systematic=array("l",[0])
 blr_eth=array("d",[0])
 blr_eth_transformed=array("d",[0])
 bdt=array("d",[0])
