@@ -28,7 +28,9 @@ systematic=array("l",[0])
 blr_eth=array("d",[0])
 blr_eth_transformed=array("d",[0])
 bdt=array("d",[0])
-
+p=array("d",[0])
+p_sig=array("d",[0])
+p_bkg=array("d",[0])
 
 # create a new database at the specified path
 myDataBase=ROOT.MEMDataBase(pathToDataBase)
@@ -51,6 +53,9 @@ intree.SetBranchAddress("systematic",systematic)
 intree.SetBranchAddress("blr_eth",blr_eth)
 intree.SetBranchAddress("blr_eth_transformed",blr_eth_transformed)
 intree.SetBranchAddress("bdt",bdt)
+intree.SetBranchAddress("mem_p",p)
+intree.SetBranchAddress("mem_p_sig",p_sig)
+intree.SetBranchAddress("mem_p_bkg",p_bkg)
 
 #loop over events
 nEntries=intree.GetEntries()
@@ -61,7 +66,7 @@ for ievt in range(nEntries):
   # add event to database
   # the event is stored with the sample identifier and the run+lumi+eventNumber triple
   # store are the outut values of the MEM calculation
-  myDataBase.AddEvent(samplename,run[0],lumi[0],event[0],systematic[0],blr_eth[0],blr_eth_transformed[0],bdt[0],-1,-1,-1)
+  myDataBase.AddEvent(samplename,run[0],lumi[0],event[0],p[0],p_sig[0],p_bkg[0],blr_eth[0],blr_eth_transformed[0],bdt[0],-99)
 
 # you can use this to viusalize the database
 myDataBase.PrintStructure()
