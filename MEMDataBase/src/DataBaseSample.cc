@@ -290,7 +290,7 @@ bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t
 //     std::cout<<"collection for event does not exist yes. Creating it"<<std::endl;
     //get ranges for lumiinterval
     Long64_t lowerlumival=lumiSection-lumiSection%10;
-    Long64_t upperlumival=lowerlumival+99999999999;
+    Long64_t upperlumival=lowerlumival+999999999999999;
     AddRunLumiEventCollection(runNumber, lowerlumival, upperlumival, -99999999999,99999999999);
 
     
