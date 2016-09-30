@@ -290,7 +290,7 @@ bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t
 //     std::cout<<"collection for event does not exist yes. Creating it"<<std::endl;
     //get ranges for lumiinterval
     Long64_t lowerlumival=lumiSection-lumiSection%10;
-    Long64_t upperlumival=lowerlumival+999999;
+    Long64_t upperlumival=lowerlumival+99999999999;
     AddRunLumiEventCollection(runNumber, lowerlumival, upperlumival, 0,999999999);
     
     relevantFileName=GetFileNameForEvent(runNumber,lumiSection,eventNumber);
@@ -340,9 +340,9 @@ bool DataBaseSample::CreateNewTree(TString filename){
   TFile* newtreefile= new TFile(dataBaseDirectory+"/"+filename,"RECREATE");
 
   TTree* newtree = new TTree("MVATree","MVATree");  
-  newtree->Branch("run",&brRun,"run/I");
-  newtree->Branch("lumi",&brLumi,"lumi/I");
-  newtree->Branch("event",&brEvent,"event/I");
+  newtree->Branch("run",&brRun,"run/L");
+  newtree->Branch("lumi",&brLumi,"lumi/L");
+  newtree->Branch("event",&brEvent,"event/L");
   newtree->Branch("p",&br_p,"p/D");
   newtree->Branch("p_sig",&br_p_sig,"p_sig/D");
   newtree->Branch("p_bkg",&br_p_bkg,"p_bkg/D");
