@@ -63,6 +63,9 @@ TString RunCollection::GetLumiAndEventIntervalString(const Long64_t lumiSection,
        if(substring!=""){
 	 lumistring+=substring;
        }
+       else{
+         lumistring="";
+       }
        break;
      }
    }

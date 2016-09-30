@@ -102,7 +102,7 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
   
   DataBaseMEMResult thisMEM;
 
-  if(relevantFileName==""){
+  if(relevantFileName=="" || relevantFileName==sampleName+"_"){
     std::cout<<"did not find event in database"<<std::endl;
     return thisMEM;
   }
@@ -291,7 +291,8 @@ bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t
     //get ranges for lumiinterval
     Long64_t lowerlumival=lumiSection-lumiSection%10;
     Long64_t upperlumival=lowerlumival+99999999999;
-    AddRunLumiEventCollection(runNumber, lowerlumival, upperlumival, 0,999999999);
+    AddRunLumiEventCollection(runNumber, lowerlumival, upperlumival, -99999999999,99999999999);
+
     
     relevantFileName=GetFileNameForEvent(runNumber,lumiSection,eventNumber);
     CreateNewTree(relevantFileName);
