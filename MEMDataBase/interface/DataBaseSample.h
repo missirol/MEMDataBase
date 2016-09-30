@@ -63,9 +63,9 @@ private:
   
 //   Long64_t lastRun;
 
-  Long_t brRun;
-  Long_t brLumi;
-  Long_t brEvent;
+  Long64_t brRun;
+  Long64_t brLumi;
+  Long64_t brEvent;
   
   Double_t br_p;
   Double_t br_p_sig;
