@@ -9,8 +9,8 @@ cwd=os.getcwd()
 
 filelist=[]
 
-filelist+=glob.glob("MEMDataBase/src/*.cc")
-filelist+=glob.glob("MEMDataBase/interface/*.h")
+filelist+=glob.glob("../src/*.cc")
+filelist+=glob.glob("../interface/*.h")
 print filelist
 
 for fn in filelist:
