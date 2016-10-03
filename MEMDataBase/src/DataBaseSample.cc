@@ -139,7 +139,7 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
     thisMEM.p_err_sig=br_p_err_sig;
     thisMEM.p_err_bkg=br_p_err_bkg;
     thisMEM.n_perm_sig=br_n_perm_sig;
-    thisMEM.n_perm_bkg=br_n_perm_sig;
+    thisMEM.n_perm_bkg=br_n_perm_bkg;
     
     std::cout<<"FOUND p= "<<thisMEM.p<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
   }
@@ -289,7 +289,7 @@ bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t
   if(relevantFileName=="" or relevantFileName==sampleName+"_"){
 //     std::cout<<"collection for event does not exist yes. Creating it"<<std::endl;
     //get ranges for lumiinterval
-    Long64_t maxRangeForLumi=1000000
+    Long64_t maxRangeForLumi=1000000;
     Long64_t lowerlumival=lumiSection-lumiSection%maxRangeForLumi;
     Long64_t upperlumival=lowerlumival+maxRangeForLumi-1;
     AddRunLumiEventCollection(runNumber, lowerlumival, upperlumival, -99999999999,99999999999);
