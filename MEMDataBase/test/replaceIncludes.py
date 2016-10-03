@@ -4,7 +4,7 @@ import glob
 
 print os.getcwd()
 cwd=os.getcwd()
-print cwd.replace("test/MEMDataBase/","")
+print cwd.replace("/MEMDataBase/test","")
 
 
 filelist=[]
@@ -20,7 +20,7 @@ for fn in filelist:
   for line in oldlist:
     newline=line
     if "#include \"MEMDataBase/MEMDataBase/" in line:
-      newline=line.replace("#include \"MEMDataBase/", "#include \""+cwd.replace("test/MEMDataBase/","")+"/")
+      newline=line.replace("#include \"MEMDataBase/", "#include \""+cwd.replace("/MEMDataBase/test","")+"/")
       print newline
     newlist.append(newline)
 
