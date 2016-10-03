@@ -42,7 +42,7 @@ private:
   Int_t currentTreeEntries;
   TString openMode;
   
-  static const int maxEventsPerTree=100000;
+  static const int maxEventsPerTree=1000000;
   
   TString GetFileNameForEvent(const Long64_t runNumber, const Long64_t lumiSection, const Long64_t eventNumber);
 //   bool GetRelevantRunAndLumi(const Long64_t lumiSection, const Long64_t eventNumber);

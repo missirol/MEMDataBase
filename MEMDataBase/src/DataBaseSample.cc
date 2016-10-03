@@ -103,7 +103,7 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
   DataBaseMEMResult thisMEM;
 
   if(relevantFileName=="" || relevantFileName==sampleName+"_"){
-    std::cout<<"did not find event in database"<<std::endl;
+//     std::cout<<"did not find event in database"<<std::endl;
     return thisMEM;
   }
   
@@ -141,10 +141,10 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
     thisMEM.n_perm_sig=br_n_perm_sig;
     thisMEM.n_perm_bkg=br_n_perm_bkg;
     
-    std::cout<<"FOUND p= "<<thisMEM.p<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
+//     std::cout<<"FOUND p= "<<thisMEM.p<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
   }
   else{
-    std::cout<<"NO ENTRY FOR: "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
+//     std::cout<<"NO ENTRY FOR: "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
   }
     
   return thisMEM;
@@ -171,13 +171,17 @@ bool DataBaseSample::CloseTree(){
 //     std::cout<<nentries<<std::endl;
     currentOpenTree->Draw("event","","goff");
     Int_t *myid = new Int_t[nentries];
+    std::cout<<"starting sorting"<<std::endl;
     TMath::Sort(nentries,currentOpenTree->GetV1(),myid,false);    
     TFile* newtreefile = new TFile(dataBaseDirectory+"/"+currentOpenFileName+"_buffer","RECREATE");
     TTree *tsorted = (TTree*)currentOpenTree->CloneTree(0);
+    std::cout<<"filling sorted events"<<std::endl;
     for (Int_t i=0;i<nentries;i++) {
       currentOpenTree->GetEntry(myid[i]);
       tsorted->Fill();
     }
+    std::cout<<"DONE filling sorted events"<<std::endl;
+    
     tsorted->Write();
     delete [] myid;
     
@@ -203,7 +207,7 @@ bool DataBaseSample::CloseTree(){
 }
 
 bool DataBaseSample::OpenTree(TString filename){
-//   std::cout<<"about to open "<<filename<<std::endl;
+  std::cout<<"about to open "<<filename<<std::endl;
   
   CloseTree();
   currentOpenFileName=filename;  
@@ -228,7 +232,7 @@ bool DataBaseSample::OpenTree(TString filename){
   
   currentTreeEntries=currentOpenTree->GetEntries();
   for(Int_t ievt=0; ievt<currentTreeEntries; ievt++){
-    if(ievt%100==0){
+    if(ievt%10000==0){
       currentOpenTree->GetEntry(ievt);
       Int_t testEventNumber=brEvent;
       
