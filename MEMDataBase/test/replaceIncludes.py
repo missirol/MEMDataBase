@@ -20,7 +20,7 @@ for fn in filelist:
   for line in oldlist:
     newline=line
     if "#include \"MEMDataBase/MEMDataBase/" in line:
-      newline=line.replace("#include \"MEMDataBase/", "#include \""+cwd+"/")
+      newline=line.replace("#include \"MEMDataBase/", "#include \""+cwd.replace("test/MEMDataBase/","")+"/")
     newlist.append(newline)
 
   f.close()
