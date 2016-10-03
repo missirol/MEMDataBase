@@ -4,7 +4,7 @@ import glob
 
 print os.getcwd()
 cwd=os.getcwd()
-
+print cwd.replace("test/MEMDataBase/","")
 
 
 filelist=[]
