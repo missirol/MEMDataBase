@@ -232,7 +232,7 @@ bool DataBaseSample::OpenTree(TString filename){
   
   currentTreeEntries=currentOpenTree->GetEntries();
   for(Int_t ievt=0; ievt<currentTreeEntries; ievt++){
-    if(ievt%10000==0){
+    if(ievt%1000==0){
       currentOpenTree->GetEntry(ievt);
       Int_t testEventNumber=brEvent;
       
@@ -293,7 +293,7 @@ bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t
   if(relevantFileName=="" or relevantFileName==sampleName+"_"){
 //     std::cout<<"collection for event does not exist yes. Creating it"<<std::endl;
     //get ranges for lumiinterval
-    Long64_t maxRangeForLumi=1000000;
+    Long64_t maxRangeForLumi=100000;
     Long64_t lowerlumival=lumiSection-lumiSection%maxRangeForLumi;
     Long64_t upperlumival=lowerlumival+maxRangeForLumi-1;
     AddRunLumiEventCollection(runNumber, lowerlumival, upperlumival, -99999999999,99999999999);
