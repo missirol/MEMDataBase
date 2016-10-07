@@ -124,7 +124,7 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
 //   std::cout<<"starting at "<<startEvt<<std::endl;
   
   bool found=false;
-  for(Int_t ievt=startEvt; ievt<currentTreeEntries; ievt++){
+  for(Int_t ievt=startEvt; ievt<startEvt+LookUpStepSize+10; ievt++){
     currentOpenTree->GetEntry(ievt);
     if(brEvent==eventNumber and brLumi==lumiSection and brRun==runNumber){
       found=true;
@@ -207,7 +207,7 @@ bool DataBaseSample::CloseTree(){
 }
 
 bool DataBaseSample::OpenTree(TString filename){
-  std::cout<<"about to open "<<filename<<std::endl;
+//   std::cout<<"about to open "<<filename<<std::endl;
   
   CloseTree();
   currentOpenFileName=filename;  
@@ -232,7 +232,7 @@ bool DataBaseSample::OpenTree(TString filename){
   
   currentTreeEntries=currentOpenTree->GetEntries();
   for(Int_t ievt=0; ievt<currentTreeEntries; ievt++){
-    if(ievt%1000==0){
+    if(ievt%LookUpStepSize==0){
       currentOpenTree->GetEntry(ievt);
       Int_t testEventNumber=brEvent;
       
