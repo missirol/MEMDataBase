@@ -92,8 +92,9 @@ for ievt in range(nEntries):
   p_vector = Cvectordouble()
   for i in range(len(p_vec)):
       p_vector.push_back(p_vec[i][0])
-  if ievt%1000==0:
-      print samplename,run[0],lumi[0],event[0],p_sig[0],p_bkg[0],blr_4b[0],blr_2b[0],[p_vector[i] for i in range(len(p_vec))]
+  #if ievt%1000==0:
+      #print samplename,run[0],lumi[0],event[0],p_sig[0],p_bkg[0],blr_4b[0],blr_2b[0],[p_vector[i] for i in range(len(p_vec))]
+  
   # add event to database
   # the event is stored with the sample identifier and the run+lumi+eventNumber triple
   # store are the outut values of the MEM calculation

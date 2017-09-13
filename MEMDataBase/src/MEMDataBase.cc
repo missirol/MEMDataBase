@@ -71,10 +71,10 @@ bool MEMDataBase::AddEvent(TString sample, Long64_t runNumber, Long64_t lumiSect
   return true;
 }
 
-bool MEMDataBase::AddEvent(TString sample, Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, std::vector<Double_t> p_vec, Double_t p_sig, Double_t p_bkg, Double_t blr_eth, Double_t blr_eth_transformed){
+bool MEMDataBase::AddEvent(TString sample, Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, std::vector<Double_t> p_vec, Double_t p_sig, Double_t p_bkg, Double_t blr_4b, Double_t blr_2b){
   for(unsigned int isample=0; isample<sampleNames.size();isample++){
     if(sampleNames.at(isample)==sample){
-      sampleDataBases.at(isample)->AddEvent(runNumber, lumiSection, eventNumber, p_vec, p_sig, p_bkg, blr_eth, blr_eth_transformed);
+      sampleDataBases.at(isample)->AddEvent(runNumber, lumiSection, eventNumber, p_vec, p_sig, p_bkg, blr_4b, blr_2b);
     }
   }
   

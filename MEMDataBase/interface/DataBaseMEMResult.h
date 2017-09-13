@@ -1,6 +1,7 @@
 #ifndef DATABASEMEMRESULT_H
 #define DATABASEMEMRESULT_H
 
+#include <vector>
 class DataBaseMEMResult{
 public:
   
@@ -9,6 +10,7 @@ public:
   
   //likelihood ratio
   double p;
+  std::vector<double> p_vec;
 
   //individual signal and background probabilities
   double p_sig;
