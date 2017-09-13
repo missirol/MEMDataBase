@@ -13,6 +13,11 @@ MEMDataBase::MEMDataBase(const TString dataBaseDirectory_){
   dataBaseDirectory=dataBaseDirectory_;
 }
 
+MEMDataBase::MEMDataBase(const TString dataBaseDirectory_,const std::vector<TString> mem_strings_){
+  dataBaseDirectory=dataBaseDirectory_;
+  mem_strings=mem_strings_;
+}
+
 void MEMDataBase::SaveDataBase(){
   std::cout<<"saving database"<<std::endl;
   for(unsigned int i=0; i<sampleDataBases.size(); i++){
@@ -34,7 +39,7 @@ MEMDataBase::~MEMDataBase(){
 void MEMDataBase::AddSample(const TString sampleName_, const TString indexfilename_){
  sampleNames.push_back(sampleName_);
 //  TString indexfilename=sampleName_+"_index.txt";
- sampleDataBases.push_back(new DataBaseSample(sampleName_, dataBaseDirectory, indexfilename_));
+ sampleDataBases.push_back(new DataBaseSample(sampleName_, dataBaseDirectory,mem_strings ,indexfilename_));
   
 }
 
@@ -60,6 +65,16 @@ bool MEMDataBase::AddEvent(TString sample, Long64_t runNumber, Long64_t lumiSect
   for(unsigned int isample=0; isample<sampleNames.size();isample++){
     if(sampleNames.at(isample)==sample){
       sampleDataBases.at(isample)->AddEvent(runNumber,lumiSection,eventNumber, p, p_sig, p_bkg, p_err_sig, p_err_bkg,n_perm_sig,n_perm_bkg);
+    }
+  }
+  
+  return true;
+}
+
+bool MEMDataBase::AddEvent(TString sample, Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, std::vector<Double_t> p_vec, Double_t p_sig, Double_t p_bkg, Double_t blr_eth, Double_t blr_eth_transformed){
+  for(unsigned int isample=0; isample<sampleNames.size();isample++){
+    if(sampleNames.at(isample)==sample){
+      sampleDataBases.at(isample)->AddEvent(runNumber, lumiSection, eventNumber, p_vec, p_sig, p_bkg, blr_eth, blr_eth_transformed);
     }
   }
   

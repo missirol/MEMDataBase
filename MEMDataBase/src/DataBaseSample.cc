@@ -2,10 +2,12 @@
 
 
 
-DataBaseSample::DataBaseSample(const TString sampleName_, const TString dataBaseDirectory_, const TString indexFile_){
+DataBaseSample::DataBaseSample(const TString sampleName_, const TString dataBaseDirectory_,const std::vector<TString> mem_strings_ ,const TString indexFile_){
   
   dataBaseDirectory=dataBaseDirectory_;
   sampleName=sampleName_;
+  mem_strings=mem_strings_;
+  br_p_vec = new Double_t[mem_strings.size()];
   
   if(indexFile_==""){indexFile=sampleName+TString("_index.txt"); std::cout<<indexFile<<std::endl; }
   else {
@@ -208,24 +210,30 @@ bool DataBaseSample::CloseTree(){
 
 bool DataBaseSample::OpenTree(TString filename){
 //   std::cout<<"about to open "<<filename<<std::endl;
-  
+  //std::cout << "test 6 " << std::endl;
   CloseTree();
+  //std::cout << "test 7 " << std::endl;
   currentOpenFileName=filename;  
   currentOpenTreeFile = new TFile(dataBaseDirectory+"/"+filename, openMode);
 //   std::cout<<currentOpenFileName<<" "<<currentOpenTreeFile<<std::endl;
   currentOpenTree=(TTree*)currentOpenTreeFile->Get("MVATree");
+  //std::cout << "test 8 " << std::endl;
 //   std::cout<<currentOpenTree<<std::endl;
 //   std::cout<<currentOpenTree->GetEntries()<<std::endl;
   currentOpenTree->SetBranchAddress("run",&brRun);
+  //std::cout << "test 9 " << std::endl;
   currentOpenTree->SetBranchAddress("lumi",&brLumi);
   currentOpenTree->SetBranchAddress("event",&brEvent);
-  currentOpenTree->SetBranchAddress("p",&br_p);
-  currentOpenTree->SetBranchAddress("p_sig",&br_p_sig);
-  currentOpenTree->SetBranchAddress("p_bkg",&br_p_bkg);
-  currentOpenTree->SetBranchAddress("p_err_sig",&br_p_err_sig);
-  currentOpenTree->SetBranchAddress("p_err_bkg",&br_p_err_bkg);
-  currentOpenTree->SetBranchAddress("n_perm_sig",&br_n_perm_sig);
-  currentOpenTree->SetBranchAddress("n_perm_bkg",&br_n_perm_bkg);
+  currentOpenTree->SetBranchAddress("mem_p",&br_p);
+  currentOpenTree->SetBranchAddress("mem_p_sig",&br_p_sig);
+  currentOpenTree->SetBranchAddress("mem_p_bkg",&br_p_bkg);
+  currentOpenTree->SetBranchAddress("mem_p_err_sig",&br_p_err_sig);
+  currentOpenTree->SetBranchAddress("mem_p_err_bkg",&br_p_err_bkg);
+  currentOpenTree->SetBranchAddress("mem_n_perm_sig",&br_n_perm_sig);
+  currentOpenTree->SetBranchAddress("mem_n_perm_bkg",&br_n_perm_bkg);
+  for(uint i=0;i<mem_strings.size();i++) {
+    currentOpenTree->SetBranchAddress(mem_strings[i],&br_p_vec[i]);
+  }
 
 //   std::cout<<"opened tree "<<dataBaseDirectory<<"/"<<filename<<std::endl;
   lookUpMap.clear();
@@ -281,6 +289,7 @@ DataBaseSample::~DataBaseSample(){
 //    std::cout<<"destructor called"<<std::endl;
    
    CloseTree();
+   delete[] br_p_vec;
 //    std::cout<<"destructor succeeded"<<std::endl;
 
 }
@@ -305,6 +314,38 @@ bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t
   if(relevantFileName!=""){
     if(relevantFileName!=currentOpenFileName){openMode="UPDATE"; OpenTree(relevantFileName);}
     AddEventToTree(runNumber, lumiSection, eventNumber, p, p_sig, p_bkg, p_err_sig, p_err_bkg,n_perm_sig,n_perm_bkg);   
+  }
+
+//   CloseTree();
+  return true; 
+}
+
+bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, std::vector<Double_t> p_vec, Double_t p_sig, Double_t p_bkg, Double_t blr_eth, Double_t blr_eth_transformed){
+  //br_p_vec.clear();
+  //std::cout << "test 1 " << std::endl;
+  TString relevantFileName=GetFileNameForEvent(runNumber,lumiSection,eventNumber);
+//   std::cout<<eventNumber<<" "<<relevantFileName<<std::endl;
+  
+  if(relevantFileName=="" or relevantFileName==sampleName+"_"){
+//     std::cout<<"collection for event does not exist yes. Creating it"<<std::endl;
+    //get ranges for lumiinterval
+    //std::cout << "test 2 " << std::endl;
+    Long64_t maxRangeForLumi=100000;
+    Long64_t lowerlumival=lumiSection-lumiSection%maxRangeForLumi;
+    Long64_t upperlumival=lowerlumival+maxRangeForLumi-1;
+    
+    AddRunLumiEventCollection(runNumber, lowerlumival, upperlumival, -99999999999,99999999999);
+
+    
+    relevantFileName=GetFileNameForEvent(runNumber,lumiSection,eventNumber);
+    CreateNewTree(relevantFileName);
+  }
+  if(relevantFileName!=""){
+    //std::cout << "test 3 " << std::endl;
+    if(relevantFileName!=currentOpenFileName){openMode="UPDATE"; OpenTree(relevantFileName);}
+    //std::cout << "test 4 " << std::endl;
+    AddEventToTree(runNumber, lumiSection, eventNumber, p_vec, p_sig, p_bkg, blr_eth, blr_eth_transformed);   
+    //std::cout << "test 5 " << std::endl;
   }
 
 //   CloseTree();
@@ -339,6 +380,39 @@ void DataBaseSample::AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Lo
 
 }
 
+void DataBaseSample::AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, std::vector<Double_t> p_vec, Double_t p_sig, Double_t p_bkg, Double_t blr_eth, Double_t blr_eth_transformed){
+    
+   brRun=runNumber;
+   brLumi=lumiSection;
+   brEvent=eventNumber;
+  
+   br_p=-1.;
+   //br_p_vec=p_vec;
+   for(uint i=0;i<p_vec.size();i++) br_p_vec[i]=p_vec[i];
+   br_blr_eth=blr_eth;
+   br_blr_eth_transformed=blr_eth_transformed;
+   br_p_sig=p_sig;
+   br_p_bkg=p_bkg;
+   br_p_err_sig=-1.;
+   br_p_err_bkg=-1.;
+   br_n_perm_sig=-1.;
+   br_n_perm_bkg=-1.;
+   //std::cout << "test 10" << std::endl;
+   currentOpenTree->Fill();
+   //std::cout << "test 11" << std::endl;
+//    std::cout<<"filled "<<eventNumber<<std::endl;
+
+   currentTreeEntries=currentOpenTree->GetEntries();
+//    std::cout<<currentOpenTree<<std::endl;
+//    std::cout<<currentOpenTree->GetEntries()<<std::endl;
+   if(currentTreeEntries>=maxEventsPerTree){
+     SplitCollection(currentOpenFileName);
+     
+   }
+
+
+}
+
 
 bool DataBaseSample::CreateNewTree(TString filename){
 //   TString newname=dataBaseDirectory+TString("/")+filename;
@@ -349,13 +423,16 @@ bool DataBaseSample::CreateNewTree(TString filename){
   newtree->Branch("run",&brRun,"run/L");
   newtree->Branch("lumi",&brLumi,"lumi/L");
   newtree->Branch("event",&brEvent,"event/L");
-  newtree->Branch("p",&br_p,"p/D");
-  newtree->Branch("p_sig",&br_p_sig,"p_sig/D");
-  newtree->Branch("p_bkg",&br_p_bkg,"p_bkg/D");
-  newtree->Branch("p_err_sig",&br_p_err_sig,"p_err_sig/D");
-  newtree->Branch("p_err_bkg",&br_p_err_bkg,"p_err_bkg/D");
-  newtree->Branch("n_perm_sig",&br_n_perm_sig,"n_perm_sig/D");
-  newtree->Branch("n_perm_bkg",&br_n_perm_bkg,"n_perm_bkg/D");
+  newtree->Branch("mem_pp",&br_p,"p/D");
+  newtree->Branch("mem_p_sig",&br_p_sig,"p_sig/D");
+  newtree->Branch("mem_p_bkg",&br_p_bkg,"p_bkg/D");
+  newtree->Branch("mem_p_err_sig",&br_p_err_sig,"p_err_sig/D");
+  newtree->Branch("mem_p_err_bkg",&br_p_err_bkg,"p_err_bkg/D");
+  newtree->Branch("mem_n_perm_sig",&br_n_perm_sig,"n_perm_sig/D");
+  newtree->Branch("mem_n_perm_bkg",&br_n_perm_bkg,"n_perm_bkg/D");
+  for(uint i=0;i<mem_strings.size();i++) {
+    newtree->Branch(mem_strings[i],&br_p_vec[i],mem_strings[i]+"/D");
+  }
   newtree->AutoSave();
   newtreefile->Close();
   delete newtreefile;

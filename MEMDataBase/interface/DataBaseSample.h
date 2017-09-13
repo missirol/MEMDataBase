@@ -19,7 +19,7 @@ class DataBaseSample{
 
 public:
   DataBaseSample();
-  DataBaseSample(const TString sampleName_, const TString dataBaseDirectory_, const TString indexFile_="");
+  DataBaseSample(const TString sampleName_, const TString dataBaseDirectory_,const std::vector<TString> mem_strings_ ,const TString indexFile_="");
   ~DataBaseSample();
   
   void AddRunLumiEventCollection(const Long64_t runNumber_, const Long64_t minLumi_, const Long64_t maxLumi_,const Long64_t minEvent_, const Long64_t maxEvent_);
@@ -28,6 +28,7 @@ public:
   DataBaseMEMResult GetMEMResult(const Long64_t runNumber, const Long64_t lumiSection, const Long64_t eventNumber);
   
   bool AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Double_t p, Double_t p_sig, Double_t p_bkg, Double_t p_err_sig, Double_t p_err_bkg, Double_t n_perm_sig, Double_t n_perm_bkg);
+  bool AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, std::vector<Double_t> p_vec, Double_t p_sig, Double_t p_bkg, Double_t blr_eth, Double_t blr_eth_transformed);
   bool SaveDataBase();
 private:
 
@@ -48,6 +49,7 @@ private:
   TString GetFileNameForEvent(const Long64_t runNumber, const Long64_t lumiSection, const Long64_t eventNumber);
 //   bool GetRelevantRunAndLumi(const Long64_t lumiSection, const Long64_t eventNumber);
   void AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Double_t p, Double_t p_sig, Double_t p_bkg, Double_t p_err_sig, Double_t p_err_bkg, Double_t n_perm_sig, Double_t n_perm_bkg);
+  void AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, std::vector<Double_t> p_vec, Double_t p_sig, Double_t p_bkg, Double_t blr_eth, Double_t blr_eth_transformed);
   bool RemoveEventCollection(const Long64_t runNumber_, const Long64_t minLumi_, const Long64_t maxLumi_,const Long64_t minEvent_, const Long64_t maxEvent_);
   
   bool OpenTree(TString filename);
@@ -60,6 +62,7 @@ private:
   TString dataBaseDirectory;
   TString indexFile;
   TString sampleName;
+  std::vector<TString> mem_strings;
 //   std::vector<TString> sampleNames;
   
 //   Long64_t lastRun;
@@ -75,6 +78,10 @@ private:
   Double_t br_p_err_bkg;
   Double_t br_n_perm_sig;
   Double_t br_n_perm_bkg;
+  Double_t br_blr_eth;
+  Double_t br_blr_eth_transformed;
+  
+  Double_t* br_p_vec;
 
   std::map<Int_t, Long64_t> lookUpMap;
   
