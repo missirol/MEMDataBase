@@ -142,6 +142,8 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
     thisMEM.p_err_bkg=br_p_err_bkg;
     thisMEM.n_perm_sig=br_n_perm_sig;
     thisMEM.n_perm_bkg=br_n_perm_bkg;
+    thisMEM.blr_eth=br_blr_eth;
+    thisMEM.blr_eth_transformed=br_blr_eth_transformed;
     for(uint i=0;i<mem_strings.size();i++) thisMEM.p_vec.push_back(br_p_vec[i]);
     
 //     std::cout<<"FOUND p= "<<thisMEM.p<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  

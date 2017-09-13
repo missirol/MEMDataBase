@@ -23,6 +23,10 @@ public:
   //Number of permutations per hypothesis 
   double n_perm_sig;
   double n_perm_bkg;
+  
+  //Btag likelihood ratios
+  double blr_eth;
+  double blr_eth_transformed;
 };
 
 

@@ -8,6 +8,8 @@ DataBaseMEMResult::DataBaseMEMResult(){
   p_err_bkg=-99;
   n_perm_sig=-99;
   n_perm_bkg=-99;
+  blr_eth=-99.;
+  blr_eth_transformed=-99.;
   
 }
 
