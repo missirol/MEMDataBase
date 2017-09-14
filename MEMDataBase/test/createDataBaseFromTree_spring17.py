@@ -6,6 +6,7 @@ import sys
 from jet_corrections import *
 from array import array
 
+# to pass the jes/jer variations to the MEM database
 Cvectordouble = getattr(ROOT, "std::vector<Double_t>")
 CvectorTString = getattr(ROOT, "std::vector<TString>")
 
@@ -37,14 +38,17 @@ bdt=array("d",[0])
 p=array("d",[0])
 p_sig=array("d",[0])
 p_bkg=array("d",[0])
+# list of arrays for the mem values of the jes/jer variations
 p_vec=[array("d",[0]) for i in range(len(jet_corrections)*2+1)]
 
-print p_vec
+#print p_vec
 
+# list of the names for the mem values related to the jes/jer variations
 mem_strings=["mem_p"]
 mem_strings+=["mem_"+corr+ud+"_p" for corr in jet_corrections for ud in ["up","down"]]
 mem_strings_vec = CvectorTString()
-print mem_strings
+#print mem_strings
+# fill the string in a vector to pass to the database
 for mem_string in mem_strings:
     mem_strings_vec.push_back(ROOT.TString(mem_string))
     
@@ -52,14 +56,14 @@ for mem_string in mem_strings:
 print "len mem_strings="+str(len(mem_strings))
 print "len p_vec="+str(len(p_vec))
 
-# create a new database at the specified path
+# create a new database at the specified path and pass the names of the mems related to the jes/jer variations
 myDataBase=ROOT.MEMDataBase(pathToDataBase,mem_strings_vec)
 
 # add the sample to the database
 myDataBase.AddSample(samplename)
 
 # add input ntuples to chain
-# KIT ntuples are called MVATree
+# the output ntuples of the mem workflow are called "tree"
 intree=ROOT.TChain("tree")
 for intreefilename in listOfInputTrees:
   print "adding ", intreefilename, " to chain"
@@ -78,7 +82,7 @@ intree.SetBranchAddress("blr_2b",blr_2b)
 #intree.SetBranchAddress("mem_p",p)
 intree.SetBranchAddress("mem_p_sig",p_sig)
 intree.SetBranchAddress("mem_p_bkg",p_bkg)
-#intree.SetBranchAddress("mem_AbsoluteStatup",p_vec[1])
+# set the branch adresses for all the mems in the event to the arrays in the list of arrays
 for i in range(len(mem_strings)):
     intree.SetBranchAddress(mem_strings[i],p_vec[i])
     print "set branch adress for "+mem_strings[i]
@@ -90,6 +94,7 @@ for ievt in range(nEntries):
     print "reading event ", ievt, "with id ", event[0]
   intree.GetEntry(ievt)
   p_vector = Cvectordouble()
+  # fill a vector of doubles with all the mem values in the event
   for i in range(len(p_vec)):
       p_vector.push_back(p_vec[i][0])
   #if ievt%1000==0:
@@ -98,6 +103,7 @@ for ievt in range(nEntries):
   # add event to database
   # the event is stored with the sample identifier and the run+lumi+eventNumber triple
   # store are the outut values of the MEM calculation
+  # use the added AddEvent function which takes the vector of mem values and the two blr values. blr_eth and blr_eth_transformed are calculated within the c++ class
   myDataBase.AddEvent(samplename,run[0],lumi[0],event[0],p_vector,p_sig[0],p_bkg[0],blr_4b[0],blr_2b[0])
 
 # you can use this to viusalize the database
