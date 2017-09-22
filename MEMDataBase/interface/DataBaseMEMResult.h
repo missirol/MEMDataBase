@@ -2,10 +2,12 @@
 #define DATABASEMEMRESULT_H
 
 #include <vector>
+#include "TString.h"
 class DataBaseMEMResult{
 public:
   
   DataBaseMEMResult();
+  DataBaseMEMResult(const std::vector<TString>& mem_strings_);
   ~DataBaseMEMResult();
   
   //likelihood ratio

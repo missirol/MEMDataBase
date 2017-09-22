@@ -102,7 +102,7 @@ TString DataBaseSample::GetFileNameForEvent(const Long64_t runNumber, const Long
 DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const Long64_t lumiSection, const Long64_t eventNumber){
   TString relevantFileName=GetFileNameForEvent(runNumber,lumiSection,eventNumber);
   
-  DataBaseMEMResult thisMEM;
+  DataBaseMEMResult thisMEM(mem_strings);
 
   if(relevantFileName=="" || relevantFileName==sampleName+"_"){
 //     std::cout<<"did not find event in database"<<std::endl;
