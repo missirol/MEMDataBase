@@ -18,23 +18,23 @@ for mem_string in mem_strings:
     mem_strings_vec.push_back(ROOT.TString(mem_string))
 
 # initialize with path to database
-myDataBase=ROOT.MEMDataBase("/nfs/dust/cms/user/mwassmer/MEM_database_spring17/test_database/ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/",mem_strings_vec)
+myDataBase=ROOT.MEMDataBase("/nfs/dust/cms/user/kelmorab/DataBases/MemDataBase_Spring17_V1/",mem_strings_vec)
 
 # load sample by identifier
 # The second argument defaults to samplename_index.txt
 # this text file simply holds a list of database files, nothing to concern you with
-myDataBase.AddSample("ttHTobbM125TuneCUETP8M2ttHtranche313TeVpowhegpythia8","ttHTobbM125TuneCUETP8M2ttHtranche313TeVpowhegpythia8_index.txt")
+myDataBase.AddSample("SingleElectron","SingleElectron_index.txt")
 
 #print structure
 myDataBase.PrintStructure()
 
-run=1
-lumi=7391
-event=1031032
+run=276242
+lumi=1074
+event=2044787483
 # retrive MEM for this event
 # return an object of class DataBaseMEMResult
 # myDataBase.GetMEMResult( samplename, run, lumi, event )
-result=myDataBase.GetMEMResult("ttHTobbM125TuneCUETP8M2ttHtranche313TeVpowhegpythia8", run, lumi, event)
+result=myDataBase.GetMEMResult("SingleElectron", run, lumi, event)
 
 print "run lumi event, MEM p", run, lumi, event, result.p_vec[0]
 print "MEM p_sig", result.p_sig

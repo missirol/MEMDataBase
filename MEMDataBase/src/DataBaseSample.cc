@@ -247,7 +247,7 @@ bool DataBaseSample::OpenTree(TString filename){
   for(Int_t ievt=0; ievt<currentTreeEntries; ievt++){
     if(ievt%LookUpStepSize==0){
       currentOpenTree->GetEntry(ievt);
-      Int_t testEventNumber=brEvent;
+      Long64_t testEventNumber=brEvent;
       
 //       std::cout<<"set up looUp table "<<ievt<<" "<<testEventNumber<<std::endl;
       lookUpMap[ievt]=testEventNumber;
