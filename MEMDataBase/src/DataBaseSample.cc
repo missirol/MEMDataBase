@@ -35,7 +35,7 @@ DataBaseSample::DataBaseSample(const TString sampleName_, const TString dataBase
       AddRunLumiEventCollection(thisrun.Atoll(), thisminlumi.Atoll(), thismaxlumi.Atoll(), thisminevent.Atoll(),thismaxevent.Atoll());
      }
    idfilestream.close();
-   std::cout<<"Index file read: "<<indexFile<<std::endl; 
+//   std::cout<<"Index file read: "<<indexFile<<std::endl; 
 //   }
   
 //   std::cout<<"empty Index file created: "<<indexFile<<std::endl; 
@@ -170,7 +170,7 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
     thisMEM.p_RelativePtHFDown=br_p_RelativePtHFDown;
     thisMEM.p_RelativeFSRUp=br_p_RelativeFSRUp;
     thisMEM.p_RelativeFSRDown=br_p_RelativeFSRDown;
-    thisMEM.p_RelativeFSRDown=br_p_RelativeStatFSRUp;
+    thisMEM.p_RelativeStatFSRUp=br_p_RelativeStatFSRUp;
     thisMEM.p_RelativeStatFSRDown=br_p_RelativeStatFSRDown;
     thisMEM.p_RelativeStatECUp=br_p_RelativeStatECUp;
     thisMEM.p_RelativeStatECDown=br_p_RelativeStatECDown;
