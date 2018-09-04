@@ -70,6 +70,8 @@ public:
   double p_PileUpPtHFDown;
   double p_RelativeBalUp;
   double p_RelativeBalDown;
+  double p_JERUp;
+  double p_JERDown;
 
   //Integration uncertainties of the probabilities
   double p_err_sig;
