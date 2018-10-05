@@ -20,6 +20,8 @@ class MEMDataBase {
   int GetValue();
 
   void AddSample(const TString sampleName_, const TString indexfilename_="");
+  void AddSample(const TString sampleName, const TString indexfilename, const TString sampleAlias);
+
   void PrintStructure();
 
   DataBaseMEMResult GetMEMResult(TString sample, Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber);

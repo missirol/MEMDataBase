@@ -35,7 +35,13 @@ void MEMDataBase::AddSample(const TString sampleName_, const TString indexfilena
  sampleNames.push_back(sampleName_);
 //  TString indexfilename=sampleName_+"_index.txt";
  sampleDataBases.push_back(new DataBaseSample(sampleName_, dataBaseDirectory, indexfilename_));
-  
+}
+
+void MEMDataBase::AddSample(const TString sampleName, const TString indexfilename, const TString sampleAlias)
+{
+  sampleNames.push_back(sampleAlias);
+
+  sampleDataBases.push_back(new DataBaseSample(sampleName, dataBaseDirectory, indexfilename));
 }
 
 void MEMDataBase::PrintStructure(){

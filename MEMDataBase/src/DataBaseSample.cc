@@ -1,6 +1,5 @@
 #include "MEMDataBase/MEMDataBase/interface/DataBaseSample.h"
-
-
+#include <stdexcept>
 
 DataBaseSample::DataBaseSample(const TString sampleName_, const TString dataBaseDirectory_, const TString indexFile_){
   
@@ -269,6 +268,12 @@ bool DataBaseSample::OpenTree(TString filename){
   CloseTree();
   currentOpenFileName=filename;  
   currentOpenTreeFile = new TFile(dataBaseDirectory+"/"+filename, openMode);
+
+  if((currentOpenTreeFile == nullptr) || currentOpenTreeFile->IsZombie())
+  {
+    throw std::runtime_error("DataBaseSample::OpenTree() -- failed to access input .root file: "+dataBaseDirectory+"/"+filename);
+  }
+
 //   std::cout<<currentOpenFileName<<" "<<currentOpenTreeFile<<std::endl;
   currentOpenTree=(TTree*)currentOpenTreeFile->Get("MVATree");
 //   std::cout<<currentOpenTree<<std::endl;
