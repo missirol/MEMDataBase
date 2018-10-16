@@ -1,8 +1,8 @@
 #include "MEMDataBase/MEMDataBase/interface/DataBaseSample.h"
 #include <stdexcept>
 
-DataBaseSample::DataBaseSample(const TString sampleName_, const TString dataBaseDirectory_, const TString indexFile_){
-  
+DataBaseSample::DataBaseSample(const TString sampleName_, const TString dataBaseDirectory_, const TString indexFile_) : verbose_(false) {
+
   dataBaseDirectory=dataBaseDirectory_;
   sampleName=sampleName_;
   
@@ -227,17 +227,18 @@ bool DataBaseSample::CloseTree(){
 //     std::cout<<nentries<<std::endl;
     currentOpenTree->Draw("event","","goff");
     Int_t *myid = new Int_t[nentries];
-    std::cout<<"starting sorting"<<std::endl;
+    if(verbose_){ std::cout<<"starting sorting"<<std::endl; }
     TMath::Sort(nentries,currentOpenTree->GetV1(),myid,false);    
     TFile* newtreefile = new TFile(dataBaseDirectory+"/"+currentOpenFileName+"_buffer","RECREATE");
     TTree *tsorted = (TTree*)currentOpenTree->CloneTree(0);
-    std::cout<<"filling sorted events"<<std::endl;
-    for (Int_t i=0;i<nentries;i++) {
+    if(verbose_){ std::cout<<"filling sorted events"<<std::endl; }
+    for (Int_t i=0;i<nentries;i++)
+    {
       currentOpenTree->GetEntry(myid[i]);
       tsorted->Fill();
     }
-    std::cout<<"DONE filling sorted events"<<std::endl;
-    
+    if(verbose_){ std::cout<<"DONE filling sorted events"<<std::endl; }
+
     tsorted->Write();
     delete [] myid;
     
