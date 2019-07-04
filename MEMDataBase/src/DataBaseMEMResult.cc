@@ -60,6 +60,8 @@ DataBaseMEMResult::DataBaseMEMResult(){
   p_PileUpPtHFDown=-99;
   p_RelativeBalUp=-99;
   p_RelativeBalDown=-99;
+  p_RelativeSampleUp=-99;
+  p_RelativeSampleDown=-99;
   p_JERUp=-99;
   p_JERDown=-99;
   p_err_sig=-99;
