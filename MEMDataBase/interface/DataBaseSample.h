@@ -142,8 +142,8 @@ private:
   Double_t br_n_perm_sig;
   Double_t br_n_perm_bkg;
 
-  Double_t blr_4b;
-  Double_t blr_2b;
+  Double_t br_blr_4b;
+  Double_t br_blr_2b;
 
   std::map<Int_t, Long64_t> lookUpMap;
 

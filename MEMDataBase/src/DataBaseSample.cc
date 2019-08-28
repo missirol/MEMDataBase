@@ -281,7 +281,7 @@ bool DataBaseSample::OpenTree(TString filename){
   }
 
 //   std::cout<<currentOpenFileName<<" "<<currentOpenTreeFile<<std::endl;
-  currentOpenTree=(TTree*)currentOpenTreeFile->Get("MVATree");
+  currentOpenTree=(TTree*)currentOpenTreeFile->Get("tree");
 //   std::cout<<currentOpenTree<<std::endl;
 //   std::cout<<currentOpenTree->GetEntries()<<std::endl;
   currentOpenTree->SetBranchAddress("run",&brRun);
@@ -535,7 +535,7 @@ bool DataBaseSample::CreateNewTree(TString filename){
 //   remove(newname);
   TFile* newtreefile= new TFile(dataBaseDirectory+"/"+filename,"RECREATE");
 
-  TTree* newtree = new TTree("MVATree","MVATree");  
+  TTree* newtree = new TTree("tree","tree");
   newtree->Branch("run",&brRun,"run/L");
   newtree->Branch("lumi",&brLumi,"lumi/L");
   newtree->Branch("event",&brEvent,"event/L");
