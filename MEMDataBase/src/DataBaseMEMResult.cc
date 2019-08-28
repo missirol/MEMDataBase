@@ -68,7 +68,8 @@ DataBaseMEMResult::DataBaseMEMResult(){
   p_err_bkg=-99;
   n_perm_sig=-99;
   n_perm_bkg=-99;
-  
+  blr_4b = -99.;
+  blr_2b = -99.;
 }
 
 DataBaseMEMResult::~DataBaseMEMResult(){}

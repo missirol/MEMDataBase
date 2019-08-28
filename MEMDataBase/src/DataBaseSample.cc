@@ -5,7 +5,7 @@ DataBaseSample::DataBaseSample(const TString sampleName_, const TString dataBase
 
   dataBaseDirectory=dataBaseDirectory_;
   sampleName=sampleName_;
-  
+
   if(indexFile_==""){indexFile=sampleName+TString("_index.txt"); std::cout<<indexFile<<std::endl; }
   else {
     indexFile=indexFile_;
@@ -198,13 +198,16 @@ DataBaseMEMResult DataBaseSample::GetMEMResult(const Long64_t runNumber, const L
     thisMEM.p_err_bkg=br_p_err_bkg;
     thisMEM.n_perm_sig=br_n_perm_sig;
     thisMEM.n_perm_bkg=br_n_perm_bkg;
-    
+
+    thisMEM.blr_4b=br_blr_4b;
+    thisMEM.blr_2b=br_blr_2b;
+
 //     std::cout<<"FOUND p= "<<thisMEM.p<<" for "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
   }
   else{
 //     std::cout<<"NO ENTRY FOR: "<<runNumber<<" "<<lumiSection<<" "<<eventNumber<<std::endl;  
   }
-    
+
   return thisMEM;
 }
 
@@ -350,6 +353,9 @@ bool DataBaseSample::OpenTree(TString filename){
   currentOpenTree->SetBranchAddress("n_perm_sig",&br_n_perm_sig);
   currentOpenTree->SetBranchAddress("n_perm_bkg",&br_n_perm_bkg);
 
+  currentOpenTree->SetBranchAddress("blr_4b",&br_blr_4b);
+  currentOpenTree->SetBranchAddress("blr_2b",&br_blr_2b);
+
 //   std::cout<<"opened tree "<<dataBaseDirectory<<"/"<<filename<<std::endl;
   lookUpMap.clear();
   
@@ -409,7 +415,7 @@ DataBaseSample::~DataBaseSample(){
 }
 
 
-bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Double_t p, Double_t p_sig, Double_t p_bkg, Double_t p_AbsoluteStatUp, Double_t p_AbsoluteStatDown, Double_t p_AbsoluteScaleUp, Double_t p_AbsoluteScaleDown, Double_t p_AbsoluteFlavMapUp, Double_t p_AbsoluteFlavMapDown, Double_t p_AbsoluteMPFBiasUp, Double_t p_AbsoluteMPFBiasDown, Double_t p_FragmentationUp, Double_t p_FragmentationDown, Double_t p_SinglePionECALUp, Double_t p_SinglePionECALDown, Double_t p_SinglePionHCALUp, Double_t p_SinglePionHCALDown, Double_t p_FlavorQCDUp, Double_t p_FlavorQCDDown, Double_t p_TimePtEtaUp, Double_t p_TimePtEtaDown, Double_t p_RelativeJEREC1Up, Double_t p_RelativeJEREC1Down, Double_t p_RelativeJEREC2Up, Double_t p_RelativeJEREC2Down, Double_t p_RelativeJERHFUp, Double_t p_RelativeJERHFDown, Double_t p_RelativePtBBUp, Double_t p_RelativePtBBDown, Double_t p_RelativePtEC1Up, Double_t p_RelativePtEC1Down, Double_t p_RelativePtEC2Up, Double_t p_RelativePtEC2Down, Double_t p_RelativePtHFUp, Double_t p_RelativePtHFDown, Double_t p_RelativeFSRUp, Double_t p_RelativeFSRDown, Double_t p_RelativeStatFSRUp, Double_t p_RelativeStatFSRDown, Double_t p_RelativeStatECUp, Double_t p_RelativeStatECDown, Double_t p_RelativeStatHFUp, Double_t p_RelativeStatHFDown, Double_t p_PileUpDataMCUp, Double_t p_PileUpDataMCDown, Double_t p_PileUpPtRefUp, Double_t p_PileUpPtRefDown, Double_t p_PileUpPtBBUp, Double_t p_PileUpPtBBDown, Double_t p_PileUpPtEC1Up, Double_t p_PileUpPtEC1Down, Double_t p_PileUpPtEC2Up, Double_t p_PileUpPtEC2Down, Double_t p_PileUpPtHFUp, Double_t p_PileUpPtHFDown, Double_t p_RelativeBalUp, Double_t p_RelativeBalDown, Double_t p_RelativeSampleUp, Double_t p_RelativeSampleDown, Double_t p_JERUp, Double_t p_JERDown, Double_t p_err_sig, Double_t p_err_bkg, Double_t n_perm_sig, Double_t n_perm_bkg){
+bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Double_t p, Double_t p_sig, Double_t p_bkg, Double_t p_AbsoluteStatUp, Double_t p_AbsoluteStatDown, Double_t p_AbsoluteScaleUp, Double_t p_AbsoluteScaleDown, Double_t p_AbsoluteFlavMapUp, Double_t p_AbsoluteFlavMapDown, Double_t p_AbsoluteMPFBiasUp, Double_t p_AbsoluteMPFBiasDown, Double_t p_FragmentationUp, Double_t p_FragmentationDown, Double_t p_SinglePionECALUp, Double_t p_SinglePionECALDown, Double_t p_SinglePionHCALUp, Double_t p_SinglePionHCALDown, Double_t p_FlavorQCDUp, Double_t p_FlavorQCDDown, Double_t p_TimePtEtaUp, Double_t p_TimePtEtaDown, Double_t p_RelativeJEREC1Up, Double_t p_RelativeJEREC1Down, Double_t p_RelativeJEREC2Up, Double_t p_RelativeJEREC2Down, Double_t p_RelativeJERHFUp, Double_t p_RelativeJERHFDown, Double_t p_RelativePtBBUp, Double_t p_RelativePtBBDown, Double_t p_RelativePtEC1Up, Double_t p_RelativePtEC1Down, Double_t p_RelativePtEC2Up, Double_t p_RelativePtEC2Down, Double_t p_RelativePtHFUp, Double_t p_RelativePtHFDown, Double_t p_RelativeFSRUp, Double_t p_RelativeFSRDown, Double_t p_RelativeStatFSRUp, Double_t p_RelativeStatFSRDown, Double_t p_RelativeStatECUp, Double_t p_RelativeStatECDown, Double_t p_RelativeStatHFUp, Double_t p_RelativeStatHFDown, Double_t p_PileUpDataMCUp, Double_t p_PileUpDataMCDown, Double_t p_PileUpPtRefUp, Double_t p_PileUpPtRefDown, Double_t p_PileUpPtBBUp, Double_t p_PileUpPtBBDown, Double_t p_PileUpPtEC1Up, Double_t p_PileUpPtEC1Down, Double_t p_PileUpPtEC2Up, Double_t p_PileUpPtEC2Down, Double_t p_PileUpPtHFUp, Double_t p_PileUpPtHFDown, Double_t p_RelativeBalUp, Double_t p_RelativeBalDown, Double_t p_RelativeSampleUp, Double_t p_RelativeSampleDown, Double_t p_JERUp, Double_t p_JERDown, Double_t p_err_sig, Double_t p_err_bkg, Double_t n_perm_sig, Double_t n_perm_bkg, Double_t blr_4b, Double_t blr_2b){
   TString relevantFileName=GetFileNameForEvent(runNumber,lumiSection,eventNumber);
 //   std::cout<<eventNumber<<" "<<relevantFileName<<std::endl;
   
@@ -427,14 +433,14 @@ bool DataBaseSample::AddEvent(Long64_t runNumber, Long64_t lumiSection, Long64_t
   }
   if(relevantFileName!=""){
     if(relevantFileName!=currentOpenFileName){openMode="UPDATE"; OpenTree(relevantFileName);}
-    AddEventToTree(runNumber, lumiSection, eventNumber, p, p_sig, p_bkg, p_AbsoluteStatUp, p_AbsoluteStatDown,p_AbsoluteScaleUp,p_AbsoluteScaleDown,p_AbsoluteFlavMapUp,p_AbsoluteFlavMapDown,p_AbsoluteMPFBiasUp,p_AbsoluteMPFBiasDown,p_FragmentationUp,p_FragmentationDown,p_SinglePionECALUp,p_SinglePionECALDown,p_SinglePionHCALUp,p_SinglePionHCALDown,p_FlavorQCDUp,p_FlavorQCDDown,p_TimePtEtaUp,p_TimePtEtaDown,p_RelativeJEREC1Up,p_RelativeJEREC1Down,p_RelativeJEREC2Up,p_RelativeJEREC2Down,p_RelativeJERHFUp,p_RelativeJERHFDown,p_RelativePtBBUp,p_RelativePtBBDown,p_RelativePtEC1Up,p_RelativePtEC1Down,p_RelativePtEC2Up,p_RelativePtEC2Down,p_RelativePtHFUp,p_RelativePtHFDown,p_RelativeFSRUp,p_RelativeFSRDown,p_RelativeStatFSRUp,p_RelativeStatFSRDown,p_RelativeStatECUp,p_RelativeStatECDown,p_RelativeStatHFUp,p_RelativeStatHFDown,p_PileUpDataMCUp,p_PileUpDataMCDown,p_PileUpPtRefUp,p_PileUpPtRefDown,p_PileUpPtBBUp,p_PileUpPtBBDown,p_PileUpPtEC1Up,p_PileUpPtEC1Down,p_PileUpPtEC2Up,p_PileUpPtEC2Down,p_PileUpPtHFUp,p_PileUpPtHFDown,p_RelativeBalUp,p_RelativeBalDown,p_RelativeSampleUp,p_RelativeSampleDown,p_JERUp,p_JERDown,p_err_sig, p_err_bkg,n_perm_sig,n_perm_bkg);
+    AddEventToTree(runNumber, lumiSection, eventNumber, p, p_sig, p_bkg, p_AbsoluteStatUp, p_AbsoluteStatDown,p_AbsoluteScaleUp,p_AbsoluteScaleDown,p_AbsoluteFlavMapUp,p_AbsoluteFlavMapDown,p_AbsoluteMPFBiasUp,p_AbsoluteMPFBiasDown,p_FragmentationUp,p_FragmentationDown,p_SinglePionECALUp,p_SinglePionECALDown,p_SinglePionHCALUp,p_SinglePionHCALDown,p_FlavorQCDUp,p_FlavorQCDDown,p_TimePtEtaUp,p_TimePtEtaDown,p_RelativeJEREC1Up,p_RelativeJEREC1Down,p_RelativeJEREC2Up,p_RelativeJEREC2Down,p_RelativeJERHFUp,p_RelativeJERHFDown,p_RelativePtBBUp,p_RelativePtBBDown,p_RelativePtEC1Up,p_RelativePtEC1Down,p_RelativePtEC2Up,p_RelativePtEC2Down,p_RelativePtHFUp,p_RelativePtHFDown,p_RelativeFSRUp,p_RelativeFSRDown,p_RelativeStatFSRUp,p_RelativeStatFSRDown,p_RelativeStatECUp,p_RelativeStatECDown,p_RelativeStatHFUp,p_RelativeStatHFDown,p_PileUpDataMCUp,p_PileUpDataMCDown,p_PileUpPtRefUp,p_PileUpPtRefDown,p_PileUpPtBBUp,p_PileUpPtBBDown,p_PileUpPtEC1Up,p_PileUpPtEC1Down,p_PileUpPtEC2Up,p_PileUpPtEC2Down,p_PileUpPtHFUp,p_PileUpPtHFDown,p_RelativeBalUp,p_RelativeBalDown,p_RelativeSampleUp,p_RelativeSampleDown,p_JERUp,p_JERDown,p_err_sig, p_err_bkg,n_perm_sig,n_perm_bkg, blr_4b, blr_2b);
   }
 
 //   CloseTree();
   return true; 
 }
 
-void DataBaseSample::AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Double_t p, Double_t p_sig, Double_t p_bkg, Double_t p_AbsoluteStatUp, Double_t p_AbsoluteStatDown, Double_t p_AbsoluteScaleUp, Double_t p_AbsoluteScaleDown, Double_t p_AbsoluteFlavMapUp, Double_t p_AbsoluteFlavMapDown, Double_t p_AbsoluteMPFBiasUp, Double_t p_AbsoluteMPFBiasDown, Double_t p_FragmentationUp, Double_t p_FragmentationDown, Double_t p_SinglePionECALUp, Double_t p_SinglePionECALDown, Double_t p_SinglePionHCALUp, Double_t p_SinglePionHCALDown, Double_t p_FlavorQCDUp, Double_t p_FlavorQCDDown, Double_t p_TimePtEtaUp, Double_t p_TimePtEtaDown, Double_t p_RelativeJEREC1Up, Double_t p_RelativeJEREC1Down, Double_t p_RelativeJEREC2Up, Double_t p_RelativeJEREC2Down, Double_t p_RelativeJERHFUp, Double_t p_RelativeJERHFDown, Double_t p_RelativePtBBUp, Double_t p_RelativePtBBDown, Double_t p_RelativePtEC1Up, Double_t p_RelativePtEC1Down, Double_t p_RelativePtEC2Up, Double_t p_RelativePtEC2Down, Double_t p_RelativePtHFUp, Double_t p_RelativePtHFDown, Double_t p_RelativeFSRUp, Double_t p_RelativeFSRDown, Double_t p_RelativeStatFSRUp, Double_t p_RelativeStatFSRDown, Double_t p_RelativeStatECUp, Double_t p_RelativeStatECDown, Double_t p_RelativeStatHFUp, Double_t p_RelativeStatHFDown, Double_t p_PileUpDataMCUp, Double_t p_PileUpDataMCDown, Double_t p_PileUpPtRefUp, Double_t p_PileUpPtRefDown, Double_t p_PileUpPtBBUp, Double_t p_PileUpPtBBDown, Double_t p_PileUpPtEC1Up, Double_t p_PileUpPtEC1Down, Double_t p_PileUpPtEC2Up, Double_t p_PileUpPtEC2Down, Double_t p_PileUpPtHFUp, Double_t p_PileUpPtHFDown, Double_t p_RelativeBalUp, Double_t p_RelativeBalDown, Double_t p_RelativeSampleUp, Double_t p_RelativeSampleDown, Double_t p_JERUp, Double_t p_JERDown, Double_t p_err_sig, Double_t p_err_bkg, Double_t n_perm_sig, Double_t n_perm_bkg){
+void DataBaseSample::AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Long64_t eventNumber, Double_t p, Double_t p_sig, Double_t p_bkg, Double_t p_AbsoluteStatUp, Double_t p_AbsoluteStatDown, Double_t p_AbsoluteScaleUp, Double_t p_AbsoluteScaleDown, Double_t p_AbsoluteFlavMapUp, Double_t p_AbsoluteFlavMapDown, Double_t p_AbsoluteMPFBiasUp, Double_t p_AbsoluteMPFBiasDown, Double_t p_FragmentationUp, Double_t p_FragmentationDown, Double_t p_SinglePionECALUp, Double_t p_SinglePionECALDown, Double_t p_SinglePionHCALUp, Double_t p_SinglePionHCALDown, Double_t p_FlavorQCDUp, Double_t p_FlavorQCDDown, Double_t p_TimePtEtaUp, Double_t p_TimePtEtaDown, Double_t p_RelativeJEREC1Up, Double_t p_RelativeJEREC1Down, Double_t p_RelativeJEREC2Up, Double_t p_RelativeJEREC2Down, Double_t p_RelativeJERHFUp, Double_t p_RelativeJERHFDown, Double_t p_RelativePtBBUp, Double_t p_RelativePtBBDown, Double_t p_RelativePtEC1Up, Double_t p_RelativePtEC1Down, Double_t p_RelativePtEC2Up, Double_t p_RelativePtEC2Down, Double_t p_RelativePtHFUp, Double_t p_RelativePtHFDown, Double_t p_RelativeFSRUp, Double_t p_RelativeFSRDown, Double_t p_RelativeStatFSRUp, Double_t p_RelativeStatFSRDown, Double_t p_RelativeStatECUp, Double_t p_RelativeStatECDown, Double_t p_RelativeStatHFUp, Double_t p_RelativeStatHFDown, Double_t p_PileUpDataMCUp, Double_t p_PileUpDataMCDown, Double_t p_PileUpPtRefUp, Double_t p_PileUpPtRefDown, Double_t p_PileUpPtBBUp, Double_t p_PileUpPtBBDown, Double_t p_PileUpPtEC1Up, Double_t p_PileUpPtEC1Down, Double_t p_PileUpPtEC2Up, Double_t p_PileUpPtEC2Down, Double_t p_PileUpPtHFUp, Double_t p_PileUpPtHFDown, Double_t p_RelativeBalUp, Double_t p_RelativeBalDown, Double_t p_RelativeSampleUp, Double_t p_RelativeSampleDown, Double_t p_JERUp, Double_t p_JERDown, Double_t p_err_sig, Double_t p_err_bkg, Double_t n_perm_sig, Double_t n_perm_bkg, Double_t blr_4b, Double_t blr_2b){
     
    brRun=runNumber;
    brLumi=lumiSection;
@@ -505,7 +511,10 @@ void DataBaseSample::AddEventToTree(Long64_t runNumber, Long64_t lumiSection, Lo
    br_p_err_bkg=p_err_bkg;
    br_n_perm_sig=n_perm_sig;
    br_n_perm_bkg=n_perm_bkg;
-   
+
+   br_blr_4b = blr_4b;
+   br_blr_2b = blr_2b;
+
    currentOpenTree->Fill();
 //    std::cout<<"filled "<<eventNumber<<std::endl;
 
@@ -595,6 +604,8 @@ bool DataBaseSample::CreateNewTree(TString filename){
   newtree->Branch("p_err_bkg",&br_p_err_bkg,"p_err_bkg/D");
   newtree->Branch("n_perm_sig",&br_n_perm_sig,"n_perm_sig/D");
   newtree->Branch("n_perm_bkg",&br_n_perm_bkg,"n_perm_bkg/D");
+  newtree->Branch("blr_4b",&br_blr_4b,"blr_4b/D");
+  newtree->Branch("blr_2b",&br_blr_2b,"blr_2b/D");
   newtree->AutoSave();
   newtreefile->Close();
   delete newtreefile;

@@ -82,6 +82,9 @@ public:
   //Number of permutations per hypothesis 
   double n_perm_sig;
   double n_perm_bkg;
+
+  double blr_4b;
+  double blr_2b;
 };
 
 
